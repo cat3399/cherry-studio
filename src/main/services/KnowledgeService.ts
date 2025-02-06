@@ -35,6 +35,14 @@ class KnowledgeService {
     baseURL,
     dimensions
   }: KnowledgeBaseParams): Promise<RAGApplication> => {
+    const isAzure = !!apiVersion; // 检查 apiVersion 是否存在，以判断是否使用 Azure OpenAI
+
+    if (isAzure) {
+      console.log('使用 Azure OpenAI'); // 添加 console.log 输出，指示使用 Azure OpenAI
+    } else {
+      console.log('使用 OpenAI'); // 添加 console.log 输出，指示使用 OpenAI (标准)
+    }
+
     return new RAGApplicationBuilder()
       .setModel('NO_MODEL')
       .setEmbeddingModel(
@@ -58,6 +66,7 @@ class KnowledgeService {
       .setVectorDatabase(new LibSqlDb({ path: path.join(this.storageDir, id) }))
       .build()
   }
+
 
   public create = async (_: Electron.IpcMainInvokeEvent, base: KnowledgeBaseParams): Promise<void> => {
     this.getRagApplication(base)
