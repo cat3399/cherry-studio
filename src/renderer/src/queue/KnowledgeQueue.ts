@@ -117,7 +117,9 @@ class KnowledgeQueue {
       let note, content
 
       console.log(`[KnowledgeQueue] Processing item: ${sourceItem.content}`)
-
+      console.log('[Debug] baseParams:', JSON.stringify(baseParams, null, 2));
+      console.log("[Debug] Processing item details:", JSON.stringify(item, null, 2)); // 打印 item 的完整结构
+      
       switch (item.type) {
         case 'note':
           note = await db.knowledge_notes.get(item.id)
